@@ -145,22 +145,43 @@ const PAGE4: PageData = {
 
 /* ── Dish Card ────────────────────────────────────────── */
 const DishCard = ({ dish }: { dish: DishItem }) => (
-  <div className="flex gap-3 items-start bg-[#faf7f2] rounded-xl p-3 border border-[#e8ddd0]">
-    <div className="relative w-[66px] h-[66px] shrink-0 rounded-lg overflow-hidden bg-stone-100">
-      <Image src={dish.image} alt={dish.name} fill sizes="66px" className="object-cover" />
-      <div className="absolute top-0.5 left-0.5 bg-stone-900/85 text-[7px] font-bold text-amber-300 px-1 py-0.5 rounded leading-tight">
+  <div className="group flex gap-4 sm:gap-5 items-center bg-[#faf8f4] hover:bg-white rounded-2xl p-3.5 sm:p-4.5 border border-[#e5d8c7] shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all duration-300">
+    {/* Large Appetizing Dish Photo */}
+    <div className="relative w-[130px] h-[130px] sm:w-[150px] sm:h-[150px] shrink-0 rounded-xl overflow-hidden bg-stone-100 shadow-sm border border-[#dfd0bd]">
+      <Image
+        src={dish.image}
+        alt={dish.name}
+        fill
+        sizes="(max-width: 640px) 130px, 150px"
+        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+      />
+      <div className="absolute top-2 left-2 bg-stone-950/85 backdrop-blur-xs text-[8.5px] sm:text-[9px] font-semibold text-amber-300 px-2 py-0.5 rounded shadow-sm tracking-wider uppercase">
         {dish.badge}
       </div>
     </div>
-    <div className="flex-1 min-w-0">
-      <h4
-        className="font-serif text-[13px] font-bold text-stone-900 leading-tight"
-        style={{ fontFamily: "var(--font-serif,serif)" }}
-      >
-        {dish.name}
-      </h4>
-      <p className="text-[11px] text-stone-500 leading-snug mt-0.5 line-clamp-2">{dish.desc}</p>
-      <div className="mt-1.5 text-[11px] font-bold font-mono text-amber-800">{dish.price}</div>
+
+    {/* Crisp, Smaller Editorial Text */}
+    <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+      <div>
+        <h4
+          className="font-serif text-[14px] sm:text-[15px] font-bold text-stone-900 leading-snug tracking-tight mb-1"
+          style={{ fontFamily: "var(--font-serif,serif)" }}
+        >
+          {dish.name}
+        </h4>
+        <p className="text-[11px] sm:text-[11.5px] text-stone-500 leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2.5">
+          {dish.desc}
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-[#ede2d2]">
+        <span className="text-[11px] sm:text-[12px] font-mono font-bold text-amber-900 bg-amber-500/10 border border-amber-600/20 px-2.5 py-0.5 rounded shadow-2xs">
+          {dish.price}
+        </span>
+        <span className="text-[10px] text-stone-400 font-medium tracking-wide">
+          Dum Recipe
+        </span>
+      </div>
     </div>
   </div>
 );
@@ -168,36 +189,50 @@ const DishCard = ({ dish }: { dish: DishItem }) => (
 /* ── Page Face Component ──────────────────────────────── */
 const PageFace = ({ data, side }: { data: PageData; side: "left" | "right" }) => (
   <div
-    className="w-full h-full bg-[#fefcf8] flex flex-col justify-between"
+    className="w-full h-full bg-[#fefcf8] flex flex-col justify-between p-5 sm:p-6.5 relative"
     style={{
       borderRight: side === "left" ? "1px solid #ddd0be" : "none",
       borderLeft: side === "right" ? "1px solid #ddd0be" : "none",
     }}
   >
     <div className="absolute top-0 inset-x-0 h-[3px] fluted-gold-panel" />
-    <div className="p-5 pt-6 flex flex-col gap-3">
-      <div className="flex items-start justify-between border-b border-[#e8ddd0] pb-2 mb-1">
-        <div>
-          <span className="text-[9px] font-bold uppercase tracking-wider text-amber-700 block">{data.label}</span>
-          <h3
-            className="font-serif text-sm font-bold text-stone-900"
-            style={{ fontFamily: "var(--font-serif,serif)" }}
-          >
-            {data.title}
-          </h3>
-        </div>
-        <span className="text-[10px] font-mono font-bold text-stone-400 shrink-0 ml-2">{data.page}</span>
+
+    {/* Page Header */}
+    <div className="flex items-center justify-between border-b border-[#e2d5c3] pb-2.5 mb-1 shrink-0">
+      <div>
+        <span className="text-[10px] sm:text-[10.5px] font-bold uppercase tracking-[0.2em] text-amber-800 block">
+          {data.label}
+        </span>
+        <h3
+          className="font-serif text-base sm:text-lg font-bold text-stone-900 tracking-tight mt-0.5"
+          style={{ fontFamily: "var(--font-serif,serif)" }}
+        >
+          {data.title}
+        </h3>
       </div>
+      <span className="text-[11px] font-mono font-bold text-amber-900/80 bg-amber-100/70 border border-amber-300/40 px-2.5 py-0.5 rounded-full shrink-0 ml-2">
+        {data.page}
+      </span>
+    </div>
+
+    {/* Dishes Area — evenly distributed across available vertical space */}
+    <div className="flex-1 flex flex-col justify-around py-2 sm:py-3 gap-3.5 sm:gap-4 my-auto">
       {data.items.map((d) => (
         <DishCard key={d.id} dish={d} />
       ))}
     </div>
-    <div className="px-5 pb-3 border-t border-[#e8ddd0] pt-2 flex items-center justify-between">
-      <span className="text-[10px] font-semibold text-amber-800">Al Sadique · 100% Halal</span>
-      <span className="text-[10px] font-mono text-stone-400">{RESTAURANT_INFO.phone}</span>
+
+    {/* Page Footer */}
+    <div className="border-t border-[#e2d5c3] pt-2.5 flex items-center justify-between text-xs shrink-0">
+      <span className="font-semibold text-amber-900 flex items-center gap-1.5 text-[11px]">
+        <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+        Al Sadique · 100% Halal
+      </span>
+      <span className="font-mono text-stone-400 text-[11px]">{RESTAURANT_INFO.phone}</span>
     </div>
   </div>
 );
+
 
 /* ── Shared Face Style Helper ─────────────────────────── */
 const faceStyle = (extra: React.CSSProperties = {}): React.CSSProperties => ({
