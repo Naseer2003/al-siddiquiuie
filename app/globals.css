@@ -2,25 +2,99 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #14171a;
+  --gold-primary: #c5a059;
+  --gold-dark: #9e7a33;
+  --gold-light: #dfc282;
+  --marble-white: #fcfbf9;
+  --marble-border: #ede8df;
+  --forest-green: #1b4332;
+  --warm-ivory: #faf8f5;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #14171a;
+  font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  overflow-x: hidden;
+  selection-background-color: #c5a059;
+  selection-color: #ffffff;
+}
+
+::selection {
+  background: #c5a059;
+  color: #ffffff;
+}
+
+/* Custom fluted gold panel pattern matching the restaurant's signature wall in the photo */
+.fluted-gold-panel {
+  background: repeating-linear-gradient(
+    90deg,
+    #cfad69 0px,
+    #ebd59b 4px,
+    #c49f54 8px,
+    #9c7832 10px,
+    #cfad69 12px
+  );
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.fluted-gold-panel-soft {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(207, 173, 105, 0.15) 0px,
+    rgba(235, 213, 155, 0.25) 3px,
+    rgba(196, 159, 84, 0.15) 6px,
+    rgba(207, 173, 105, 0.15) 8px
+  );
+}
+
+/* Subtle marble texture overlay */
+.marble-sheen {
+  background-image: radial-gradient(circle at 10% 20%, rgba(245, 241, 235, 0.7) 0%, rgba(255, 255, 255, 0.95) 90%);
+}
+
+/* Luxury gold text gradient */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #a77b28 0%, #c5a059 50%, #e6cb85 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Shimmer animation */
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.shimmer-sweep {
+  animation: shimmerSweep 3.5s infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f6f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4b87e;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b59247;
 }
